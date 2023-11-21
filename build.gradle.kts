@@ -21,6 +21,13 @@ ide {
     doNotDetectFrameworks("android", "jruby")
 }
 
+repositories {
+    maven {
+        url = uri("https://maven.aliyun.com/repository/public/")
+    }
+    mavenCentral()
+}
+
 val String.v: String get() = rootProject.extra["$this.version"] as String
 
 val buildVersion = "pgjdbc".v + releaseParams.snapshotSuffix

@@ -247,6 +247,8 @@ public class PgConnection implements BaseConnection {
                       String url) throws SQLException {
     // Print out the driver version number
     LOGGER.log(Level.FINE, org.postgresql.util.DriverInfo.DRIVER_FULL_NAME);
+    System.out.println("new PgConnection 111");
+    LOGGER.log(Level.INFO, "new PgConnection 111");
 
     this.creatingURL = url;
 
@@ -1019,32 +1021,33 @@ public class PgConnection implements BaseConnection {
   public int getTransactionIsolation() throws SQLException {
     checkClosed();
 
-    String level = null;
-    final ResultSet rs = execSQLQuery("SHOW TRANSACTION ISOLATION LEVEL"); // nb: no BEGIN triggered
-    if (rs.next()) {
-      level = rs.getString(1);
-    }
-    rs.close();
+    // String level = null;
+    // final ResultSet rs = execSQLQuery("SHOW TRANSACTION ISOLATION LEVEL"); // nb: no BEGIN triggered
+    // if (rs.next()) {
+    //   level = rs.getString(1);
+    // }
+    // rs.close();
+    //
+    // // TODO revisit: throw exception instead of silently eating the error in unknown cases?
+    // if (level == null) {
+    //   return Connection.TRANSACTION_READ_COMMITTED; // Best guess.
+    // }
+    //
+    // level = level.toUpperCase(Locale.US);
+    // if (level.equals("READ COMMITTED")) {
+    //   return Connection.TRANSACTION_READ_COMMITTED;
+    // }
+    // if (level.equals("READ UNCOMMITTED")) {
+    //   return Connection.TRANSACTION_READ_UNCOMMITTED;
+    // }
+    // if (level.equals("REPEATABLE READ")) {
+    //   return Connection.TRANSACTION_REPEATABLE_READ;
+    // }
+    // if (level.equals("SERIALIZABLE")) {
+    //   return Connection.TRANSACTION_SERIALIZABLE;
+    // }
 
-    // TODO revisit: throw exception instead of silently eating the error in unknown cases?
-    if (level == null) {
-      return Connection.TRANSACTION_READ_COMMITTED; // Best guess.
-    }
-
-    level = level.toUpperCase(Locale.US);
-    if (level.equals("READ COMMITTED")) {
-      return Connection.TRANSACTION_READ_COMMITTED;
-    }
-    if (level.equals("READ UNCOMMITTED")) {
-      return Connection.TRANSACTION_READ_UNCOMMITTED;
-    }
-    if (level.equals("REPEATABLE READ")) {
-      return Connection.TRANSACTION_REPEATABLE_READ;
-    }
-    if (level.equals("SERIALIZABLE")) {
-      return Connection.TRANSACTION_SERIALIZABLE;
-    }
-
+    System.out.println("111 getTransactionIsolation");
     return Connection.TRANSACTION_READ_COMMITTED; // Best guess.
   }
 
@@ -1063,9 +1066,10 @@ public class PgConnection implements BaseConnection {
           PSQLState.NOT_IMPLEMENTED);
     }
 
-    String isolationLevelSQL =
-        "SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL " + isolationLevelName;
-    execSQLUpdate(isolationLevelSQL); // nb: no BEGIN triggered
+    // String isolationLevelSQL =
+    //     "SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL " + isolationLevelName;
+    // execSQLUpdate(isolationLevelSQL); // nb: no BEGIN triggered
+    System.out.println("111 Transaction isolation level " + isolationLevelName + " not set for chpg.");
     LOGGER.log(Level.FINE, "  setTransactionIsolation = {0}", isolationLevelName);
   }
 

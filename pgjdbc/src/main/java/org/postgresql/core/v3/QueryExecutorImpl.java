@@ -2766,24 +2766,24 @@ public class QueryExecutorImpl extends QueryExecutorBase {
     if (LOGGER.isLoggable(Level.FINEST)) {
       LOGGER.log(Level.FINEST, " <=BE ReadyForQuery({0})", tStatus);
     }
-
     // Update connection state.
-    switch (tStatus) {
-      case 'I':
-        transactionFailCause = null;
-        setTransactionState(TransactionState.IDLE);
-        break;
-      case 'T':
-        transactionFailCause = null;
-        setTransactionState(TransactionState.OPEN);
-        break;
-      case 'E':
+    // switch (tStatus) {
+    //   case 'I':
+    //     transactionFailCause = null;
+    //     setTransactionState(TransactionState.IDLE);
+    //     break;
+    //   case 'T':
+    //     transactionFailCause = null;
+    //     setTransactionState(TransactionState.OPEN);
+    //     break;
+    //   case 'E':
+        System.out.println("setTransactionState(TransactionState.FAILED)");
         setTransactionState(TransactionState.FAILED);
-        break;
-      default:
-        throw new IOException(
-            "unexpected transaction state in ReadyForQuery message: " + (int) tStatus);
-    }
+    //     break;
+    //   default:
+    //     throw new IOException(
+    //         "unexpected transaction state in ReadyForQuery message: " + (int) tStatus);
+    // }
   }
 
   @Override
