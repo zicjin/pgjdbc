@@ -247,8 +247,6 @@ public class PgConnection implements BaseConnection {
                       String url) throws SQLException {
     // Print out the driver version number
     LOGGER.log(Level.FINE, org.postgresql.util.DriverInfo.DRIVER_FULL_NAME);
-    System.out.println("new PgConnection 111");
-    LOGGER.log(Level.INFO, "new PgConnection 111");
 
     this.creatingURL = url;
 
@@ -894,11 +892,12 @@ public class PgConnection implements BaseConnection {
   @Override
   public void setReadOnly(boolean readOnly) throws SQLException {
     checkClosed();
-    if (queryExecutor.getTransactionState() != TransactionState.IDLE) {
-      throw new PSQLException(
-          GT.tr("Cannot change transaction read-only property in the middle of a transaction."),
-          PSQLState.ACTIVE_SQL_TRANSACTION);
-    }
+    System.out.println("111 setReadOnly " + readOnly);
+    // if (queryExecutor.getTransactionState() != TransactionState.IDLE) {
+    //   throw new PSQLException(
+    //       GT.tr("Cannot change transaction read-only property in the middle of a transaction."),
+    //       PSQLState.ACTIVE_SQL_TRANSACTION);
+    // }
 
     if (readOnly != this.readOnly && autoCommit && this.readOnlyBehavior == ReadOnlyBehavior.always) {
       execSQLUpdate(readOnly ? setSessionReadOnly : setSessionNotReadOnly);

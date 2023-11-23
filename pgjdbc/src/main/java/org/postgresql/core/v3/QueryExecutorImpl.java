@@ -329,6 +329,7 @@ public class QueryExecutorImpl extends QueryExecutorBase {
   public void execute(Query query, @Nullable ParameterList parameters,
       ResultHandler handler,
       int maxRows, int fetchSize, int flags, boolean adaptiveFetch) throws SQLException {
+    // System.out.println("111 QueryExecutorImpl.execute: " + query + " parameters: " + parameters);
     try (ResourceLock ignore = lock.obtain()) {
       waitOnLock();
       if (LOGGER.isLoggable(Level.FINEST)) {
